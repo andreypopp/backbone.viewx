@@ -1,0 +1,34 @@
+{
+  "name": "backbone.viewx",
+  "version": "0.0.0",
+  "description": "Backbone.View on steroids",
+  "main": "backbone.viewx.js",
+  "dependencies": {
+    "backbone": "~1.0.0"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.x",
+    "mocha": "",
+    "chai": "",
+    "jsdom": "",
+    "jquery": ""
+  },
+  "repository": {
+      "type": "git",
+      "url": "git://github.com/andreypopp/backbone.viewx.git"
+  },
+  "homepage": "https://github.com/andreypopp/backbone.viewx",
+  "keywords": [
+      "browser",
+      "backbone",
+      "events",
+      "view",
+      "mvc"
+  ],
+  "author": {
+      "name": "Andrey Popp",
+      "email": "8mayday@gmail.com",
+      "url": "http://andreypopp.com"
+  },
+  "license": "MIT"
+}
