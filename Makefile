@@ -12,7 +12,7 @@ install link:
 	@npm $@
 
 test:
-	@$(BIN)/mocha -R spec --compilers coffee:coffee-script spec.coffee
+	@$(BIN)/mocha -b -R spec --compilers coffee:coffee-script spec.coffee
 
 release-patch: build test
 	@$(call release,patch)

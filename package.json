@@ -4,7 +4,8 @@
   "description": "Backbone.View on steroids",
   "main": "backbone.viewx.js",
   "dependencies": {
-    "backbone": "~1.0.0"
+    "backbone": "~1.0.0",
+    "underscore": "~1.4.4"
   },
   "devDependencies": {
     "coffee-script": "~1.6.x",
