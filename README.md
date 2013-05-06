@@ -1,4 +1,4 @@
-backbone.viewx is a library which consist of 
+backbone.viewx is a library which consist of
 
 * a Backbone.View subclass flavoured with sub view management routines and DOM
   insertion methods.
@@ -11,7 +11,7 @@ backbone.viewx is a library which consist of
             this.content = @view(new Content)
               .render()
               .appendTo(this.el)
-            # appendTo, prependTo, appendAfter, appendBefore # append, prepend,
+            # appendTo, prependTo, appendAfter, appendBefore, append, prepend,
             # after, before are also available
 
           onEnterDOM: ->
