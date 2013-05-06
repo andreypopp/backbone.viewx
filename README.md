@@ -1,3 +1,5 @@
+[![browser support](https://ci.testling.com/andreypopp/backbone.viewx.png)](https://ci.testling.com/andreypopp/backbone.viewx)
+
 backbone.viewx is a library which consist of
 
 * a Backbone.View subclass flavoured with sub view management routines and DOM

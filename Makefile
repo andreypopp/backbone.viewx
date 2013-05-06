@@ -1,8 +1,10 @@
 BIN = ./node_modules/.bin
+SRC = $(wildcard *.coffee)
+LIB = $(SRC:%.coffee=%.js)
 
-build: backbone.viewx.js
+build: $(LIB)
 
-backbone.viewx.js: backbone.viewx.coffee
+%.js: %.coffee
 	@$(BIN)/coffee -bcp $< > $@
 
 clean:
