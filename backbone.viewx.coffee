@@ -28,15 +28,19 @@ exports.DOMInsertionMethods =
 
   prepend: (el) ->
     if el.el? then el.prependTo(this) else this.$el.prepend(el)
+    this
 
   append: (el) ->
     if el.el? then el.appendTo(this) else this.$el.append(el)
+    this
 
   after: (el) ->
     if el.el? then el.appendAfter(this) else this.$el.after(el)
+    this
 
   before: (el) ->
     if el.el? then el.appendBefore(this) else this.$el.before(el)
+    this
 
   callOnEnterDOM: ->
     this.onEnterDOM?()

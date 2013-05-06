@@ -42,31 +42,35 @@ exports.DOMInsertionMethods = {
   },
   prepend: function(el) {
     if (el.el != null) {
-      return el.prependTo(this);
+      el.prependTo(this);
     } else {
-      return this.$el.prepend(el);
+      this.$el.prepend(el);
     }
+    return this;
   },
   append: function(el) {
     if (el.el != null) {
-      return el.appendTo(this);
+      el.appendTo(this);
     } else {
-      return this.$el.append(el);
+      this.$el.append(el);
     }
+    return this;
   },
   after: function(el) {
     if (el.el != null) {
-      return el.appendAfter(this);
+      el.appendAfter(this);
     } else {
-      return this.$el.after(el);
+      this.$el.after(el);
     }
+    return this;
   },
   before: function(el) {
     if (el.el != null) {
-      return el.appendBefore(this);
+      el.appendBefore(this);
     } else {
-      return this.$el.before(el);
+      this.$el.before(el);
     }
+    return this;
   },
   callOnEnterDOM: function() {
     var view, _, _ref1, _results;
