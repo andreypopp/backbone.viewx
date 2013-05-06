@@ -5,7 +5,7 @@ var $, Backbone, Collection, CollectionView, Model, View, equal, ok, _ref, _ref1
 
 _ref = Backbone = require('backbone'), Collection = _ref.Collection, Model = _ref.Model;
 
-$ = Backbone.$ = require('jquery');
+$ = Backbone.$ = (typeof window !== "undefined" && window !== null ? window.$ : void 0) || require('jquery');
 
 _ref1 = require('./backbone.viewx'), View = _ref1.View, CollectionView = _ref1.CollectionView;
 

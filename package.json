@@ -19,15 +19,16 @@
     "url": "git://github.com/andreypopp/backbone.viewx.git"
   },
   "testling": {
-      "files": "spec.js",
-      "browsers": {
-        "ie": [8, 9, 10],
-        "firefox": [16,17,18,19],
-        "chrome": [22,23,24,25],
-        "safari": [5.1, 6],
-        "ipad": [6],
-        "iphone": [6]
-      }
+    "files": "spec.js",
+    "scripts": "jquery.js",
+    "browsers": {
+      "ie": [9, 10],
+      "firefox": [16,17,18,19],
+      "chrome": [22,23,24,25],
+      "safari": [5.1, 6],
+      "ipad": [6],
+      "iphone": [6]
+    }
   },
   "homepage": "https://github.com/andreypopp/backbone.viewx",
   "keywords": [

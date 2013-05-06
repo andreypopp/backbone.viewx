@@ -1,5 +1,5 @@
 {Collection, Model} = Backbone = require 'backbone'
-$ = Backbone.$ = require 'jquery'
+$ = Backbone.$ = window?.$ or require 'jquery'
 {View, CollectionView} = require './backbone.viewx'
 {equal, ok} = require 'assert'
 
