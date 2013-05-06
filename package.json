@@ -1,6 +1,6 @@
 {
   "name": "backbone.viewx",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Backbone.View on steroids",
   "main": "backbone.viewx.js",
   "dependencies": {
