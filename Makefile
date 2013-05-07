@@ -26,6 +26,10 @@ release-minor: build test
 release-major: build test
 	@$(call release,major)
 
+publish:
+	git push --tags origin HEAD:master
+	npm publish
+
 define release
 	VERSION=`node -pe "require('./package.json').version"` && \
 	NEXT_VERSION=`node -pe "require('semver').inc(\"$$VERSION\", '$(1)')"` && \
@@ -35,7 +39,6 @@ define release
   	var s = JSON.stringify(j, null, 2);\
   	require('fs').writeFileSync('./package.json', s);" && \
   git commit -m "release $$NEXT_VERSION" -- package.json && \
-  git tag "$$NEXT_VERSION" -m "release $$NEXT_VERSION" && \
-  git push --tags origin HEAD:master && \
-  npm publish
+  git tag "$$NEXT_VERSION" -m "release $$NEXT_VERSION"
+  $(MAKE) publish
 endef
