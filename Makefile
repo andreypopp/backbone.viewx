@@ -1,10 +1,11 @@
 BIN = ./node_modules/.bin
-SRC = $(wildcard *.coffee)
-LIB = $(SRC:%.coffee=%.js)
+SRC = $(wildcard src/*.coffee)
+LIB = $(SRC:src/%.coffee=lib/%.js)
 
 build: $(LIB)
 
-%.js: %.coffee
+lib/%.js: src/%.coffee
+	@mkdir -p $(@D)
 	@$(BIN)/coffee -bcp $< > $@
 
 clean:

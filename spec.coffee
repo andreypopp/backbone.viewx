@@ -1,6 +1,6 @@
 {Collection, Model} = Backbone = require 'backbone'
 $ = Backbone.$ = window?.$ or require 'jquery'
-{View, CollectionView} = require './backbone.viewx'
+{View, CollectionView} = require './src/index'
 {equal, ok} = require 'assert'
 
 describe 'backbone.viewx', ->
