@@ -2,9 +2,12 @@
 {View, $} = require 'backbone'
 
 contains = (doc, el) ->
-  (doc.contains or $.contains)(doc, el)
+  if doc.contains?
+    doc.contains(el)
+  else
+    $.contains(doc, el)
 
-exports.DOMInsertionMethods = 
+exports.DOMInsertionMethods =
 
   prependTo: (el) ->
     $(el.el or el).prepend(this.el)
