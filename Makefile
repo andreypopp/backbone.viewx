@@ -38,5 +38,5 @@ define release
   	j.version = \"$$NEXT_VERSION\";\
   	var s = JSON.stringify(j, null, 2);\
   	require('fs').writeFileSync('./package.json', s);" && \
-  git commit -m "release $$NEXT_VERSION" -- package.json && \
+  git commit -m "release $$NEXT_VERSION" -- package.json
 endef
