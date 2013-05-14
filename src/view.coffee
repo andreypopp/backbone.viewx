@@ -67,7 +67,7 @@ class exports.View extends View
     this
 
   removeViews: ->
-    this.removeView(view) for _, view of this.viewsByCid
+    this.removeView(view) for _, view of extend({}, this.viewsByCid)
     this
 
   remove: ->
