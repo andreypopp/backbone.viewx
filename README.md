@@ -37,5 +37,5 @@ collections:
       .appendTo(document.body)
     view.collection.add(new Backbone.Model(name: 'First')) # view updates!
 
-There's also an `reversed` option you can pass to a constructor to have your
+There's also an `reverse` option you can pass to a constructor to have your
 items be rendered in a reverse order.
