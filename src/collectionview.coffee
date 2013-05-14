@@ -34,10 +34,16 @@ class exports.CollectionView extends View
       (model, index) =>
         view = new this.itemView(model: model)
         view = this.view(view, at: index)
-        if index?
-          this.views.splice(index, 0, view)
+        if this.options.reverse
+          if index?
+            this.views.splice(this.views.length - index - 1, 0, view)
+          else
+            this.views.unshift(view)
         else
-          this.views.push(view)
+          if index?
+            this.views.splice(index, 0, view)
+          else
+            this.views.push(view)
         view.render()
         view
     else
@@ -52,7 +58,10 @@ class exports.CollectionView extends View
     this.trigger 'reset:before'
     this.removeViews()
     this.collection.forEach (model) =>
-      this.makeItemView(model).appendTo(this.el)
+      if this.options.reverse
+        this.makeItemView(model).prependTo(this.el)
+      else
+        this.makeItemView(model).appendTo(this.el)
     this.trigger 'reset'
 
   onSort: ->
@@ -62,22 +71,37 @@ class exports.CollectionView extends View
       view = this.getItemView(model)
       idx = this.views.indexOf(view)
       this.views.splice(idx, 1)[0]
-      this.views.splice(newIdx, 0, view)
-      if not $cur
-        view.appendTo(this)
+      if this.options.reverse
+        this.views.splice(this.views.length - newIdx - 1, 0, view)
+        if not $cur
+          view.prependTo(this)
+        else
+          view.before($cur)
+          $cur = view.$el
       else
-        view.after($cur)
-        $cur = view.$el
+        this.views.splice(newIdx, 0, view)
+        if not $cur
+          view.appendTo(this)
+        else
+          view.after($cur)
+          $cur = view.$el
     this.trigger 'sort'
 
   onAdd: (model) ->
     idx = this.collection.indexOf(model)
     view = this.makeItemView(model, idx)
     this.trigger 'add:before', view
-    if idx >= this.$el.children().size()
-      view.appendTo(this)
+    size = this.$el.children().size()
+    if this.options.reverse
+      if idx >= size
+        view.prependTo(this)
+      else
+        view.appendAfter(this.$el.children().eq(size - idx - 1))
     else
-      view.appendBefore(this.$el.children().eq(idx))
+      if idx >= size
+        view.appendTo(this)
+      else
+        view.appendBefore(this.$el.children().eq(idx))
     this.trigger 'add', view
 
   onRemove: (model) ->

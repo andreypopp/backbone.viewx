@@ -165,73 +165,143 @@ describe 'backbone.viewx', ->
         c.add new Model(name: 'b', ord: 2), {sort: false}
         c.add new Model(name: 'c', ord: 0), {sort: false}
 
-      collection = makeCollection()
-
       class MyView extends CollectionView
         itemView: class extends View
           render: ->
             this.$el.html(this.model.get('name'))
 
-      it 'should render a collection', ->
-        v = new MyView(collection: collection).render()
-        equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+      describe 'direct order', ->
 
-      it 'should re-render collection on reset', ->
         collection = makeCollection()
-        v = new MyView(collection: collection).render()
-        equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
-        collection.reset([new Model(name: 'x')])
-        equal v.$el.html(), '<div>x</div>'
 
-      it 'should re-order item views on sort', ->
+        it 'should render a collection', ->
+          v = new MyView(collection: collection).render()
+          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+
+        it 'should re-render collection on reset', ->
+          collection = makeCollection()
+          v = new MyView(collection: collection).render()
+          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+          collection.reset([new Model(name: 'x')])
+          equal v.$el.html(), '<div>x</div>'
+
+        it 'should re-order item views on sort', ->
+          collection = makeCollection()
+          v = new MyView(collection: collection).render()
+          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+          collection.sort()
+          equal v.$el.html(), '<div>c</div><div>a</div><div>b</div>'
+
+        describe 'add to collection', ->
+
+          it 'should react on add new item to the end of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection).render()
+            equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+            collection.add new Model(name: 'd'), {sort: false}
+            equal v.$el.html(), '<div>a</div><div>b</div><div>c</div><div>d</div>'
+
+          it 'should react on add new item to the start of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection).render()
+            equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+            collection.add new Model(name: 'd'), {at: 0}
+            equal v.$el.html(), '<div>d</div><div>a</div><div>b</div><div>c</div>'
+
+          it 'should react on add new item by index to the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection).render()
+            equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+            collection.add new Model(name: 'd'), {at: 2}
+            equal v.$el.html(), '<div>a</div><div>b</div><div>d</div><div>c</div>'
+
+        describe 'remove from collection', ->
+
+          it 'should react on remove item from the start of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection).render()
+            equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+            collection.remove(collection.at(0))
+            equal v.$el.html(), '<div>b</div><div>c</div>'
+
+          it 'should react on remove item from the end of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection).render()
+            equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+            collection.remove(collection.last())
+            equal v.$el.html(), '<div>a</div><div>b</div>'
+
+          it 'should react on remove item from the middle of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection).render()
+            equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
+            collection.remove(collection.at(1))
+            equal v.$el.html(), '<div>a</div><div>c</div>'
+
+      describe 'reverse order', ->
+
         collection = makeCollection()
-        v = new MyView(collection: collection).render()
-        equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
-        collection.sort()
-        equal v.$el.html(), '<div>c</div><div>a</div><div>b</div>'
 
-      describe 'add to collection', ->
+        it 'should render a collection', ->
+          v = new MyView(collection: collection, reverse: true).render()
+          equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
 
-        it 'should react on add new item to the end of the collection', ->
+        it 'should re-render collection on reset', ->
           collection = makeCollection()
-          v = new MyView(collection: collection).render()
-          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
-          collection.add new Model(name: 'd'), {sort: false}
-          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div><div>d</div>'
+          v = new MyView(collection: collection, reverse: true).render()
+          equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
+          collection.reset([new Model(name: 'x'), new Model(name: 'y')])
+          equal v.$el.html(), '<div>y</div><div>x</div>'
 
-        it 'should react on add new item to the start of the collection', ->
+        it 'should re-order item views on sort', ->
           collection = makeCollection()
-          v = new MyView(collection: collection).render()
-          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
-          collection.add new Model(name: 'd'), {at: 0}
-          equal v.$el.html(), '<div>d</div><div>a</div><div>b</div><div>c</div>'
+          v = new MyView(collection: collection, reverse: true).render()
+          equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
+          collection.sort()
+          equal v.$el.html(), '<div>b</div><div>a</div><div>c</div>'
 
-        it 'should react on add new item by index to the collection', ->
-          collection = makeCollection()
-          v = new MyView(collection: collection).render()
-          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
-          collection.add new Model(name: 'd'), {at: 2}
-          equal v.$el.html(), '<div>a</div><div>b</div><div>d</div><div>c</div>'
+        describe 'add to collection', ->
 
-      describe 'remove from collection', ->
+          it 'should react on add new item to the end of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection, reverse: true).render()
+            equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
+            collection.add new Model(name: 'd'), {sort: false}
+            equal v.$el.html(), '<div>d</div><div>c</div><div>b</div><div>a</div>'
 
-        it 'should react on remove item from the start of the collection', ->
-          collection = makeCollection()
-          v = new MyView(collection: collection).render()
-          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
-          collection.remove(collection.at(0))
-          equal v.$el.html(), '<div>b</div><div>c</div>'
+          it 'should react on add new item to the start of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection, reverse: true).render()
+            equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
+            collection.add new Model(name: 'd'), {at: 0, sort: false}
+            equal v.$el.html(), '<div>c</div><div>b</div><div>a</div><div>d</div>'
 
-        it 'should react on remove item from the end of the collection', ->
-          collection = makeCollection()
-          v = new MyView(collection: collection).render()
-          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
-          collection.remove(collection.last())
-          equal v.$el.html(), '<div>a</div><div>b</div>'
+          it 'should react on add new item by index to the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection, reverse: true).render()
+            equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
+            collection.add new Model(name: 'd'), {at: 2, sort: false}
+            equal v.$el.html(), '<div>c</div><div>d</div><div>b</div><div>a</div>'
 
-        it 'should react on remove item from the middle of the collection', ->
-          collection = makeCollection()
-          v = new MyView(collection: collection).render()
-          equal v.$el.html(), '<div>a</div><div>b</div><div>c</div>'
-          collection.remove(collection.at(1))
-          equal v.$el.html(), '<div>a</div><div>c</div>'
+        describe 'remove from collection', ->
+
+          it 'should react on remove item from the start of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection, reverse: true).render()
+            equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
+            collection.remove(collection.at(0))
+            equal v.$el.html(), '<div>c</div><div>b</div>'
+
+          it 'should react on remove item from the end of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection, reverse: true).render()
+            equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
+            collection.remove(collection.last())
+            equal v.$el.html(), '<div>b</div><div>a</div>'
+
+          it 'should react on remove item from the middle of the collection', ->
+            collection = makeCollection()
+            v = new MyView(collection: collection, reverse: true).render()
+            equal v.$el.html(), '<div>c</div><div>b</div><div>a</div>'
+            collection.remove(collection.at(1))
+            equal v.$el.html(), '<div>c</div><div>a</div>'
